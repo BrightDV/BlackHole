@@ -2325,6 +2325,20 @@ class _SettingPageState extends State<SettingPage> {
                                           }
                                         },
                                       ),
+                                      CheckboxListTile(
+                                        title: Text(
+                                          AppLocalizations.of(context)!.title,
+                                        ),
+                                        value: downFilename == 2,
+                                        selected: downFilename == 2,
+                                        onChanged: (val) {
+                                          if (val ?? false) {
+                                            downFilename = 2;
+                                            settingsBox.put('downFilename', 2);
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                      ),
                                     ],
                                   ),
                                 );
