@@ -116,13 +116,7 @@ class _SettingPageState extends State<SettingPage> {
   ];
   List miniButtonsOrder = Hive.box('settings').get(
     'miniButtonsOrder',
-    defaultValue: [
-      AppLocalizations.of(context)!.like,
-      AppLocalizations.of(context)!.previous,
-      '${AppLocalizations.of(context)!.play}/${AppLocalizations.of(context)!.pause}',
-      AppLocalizations.of(context)!.next,
-      AppLocalizations.of(context)!.down,
-    ], // Change buttons name to localization
+    defaultValue: ['Like', 'Previous', 'Play/Pause', 'Next', 'Download'],
   ) as List;
   List preferredLanguage = Hive.box('settings')
       .get('preferredLanguage', defaultValue: ['Hindi'])?.toList() as List;
