@@ -78,7 +78,8 @@ class Download with ChangeNotifier {
     data['title'] = data['title'].toString().split('(From')[0].trim();
 
     String filename = '';
-    final int downFilename = Hive.box('settings').get('downFilename', defaultValue: 0) as int;
+    final int downFilename =
+        Hive.box('settings').get('downFilename', defaultValue: 0) as int;
     if (downFilename == 0) {
       filename = '${data["title"]} - ${data["artist"]}';
     } else if (downFilename == 1) {

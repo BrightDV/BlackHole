@@ -116,7 +116,13 @@ class _SettingPageState extends State<SettingPage> {
   ];
   List miniButtonsOrder = Hive.box('settings').get(
     'miniButtonsOrder',
-    defaultValue: ['Like', 'Previous', 'Play/Pause', 'Next', 'Download'],
+    defaultValue: [
+      AppLocalizations.of(context)!.like,
+      AppLocalizations.of(context)!.previous,
+      '${AppLocalizations.of(context)!.play}/${AppLocalizations.of(context)!.pause}',
+      AppLocalizations.of(context)!.next,
+      AppLocalizations.of(context)!.down,
+    ], // Change buttons name to localization
   ) as List;
   List preferredLanguage = Hive.box('settings')
       .get('preferredLanguage', defaultValue: ['Hindi'])?.toList() as List;
@@ -2298,6 +2304,9 @@ class _SettingPageState extends State<SettingPage> {
                                     ),
                                     children: [
                                       CheckboxListTile(
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                         title: Text(
                                           '${AppLocalizations.of(context)!.title} - ${AppLocalizations.of(context)!.artist}',
                                         ),
@@ -2312,6 +2321,9 @@ class _SettingPageState extends State<SettingPage> {
                                         },
                                       ),
                                       CheckboxListTile(
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                         title: Text(
                                           '${AppLocalizations.of(context)!.artist} - ${AppLocalizations.of(context)!.title}',
                                         ),
@@ -2326,6 +2338,9 @@ class _SettingPageState extends State<SettingPage> {
                                         },
                                       ),
                                       CheckboxListTile(
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                         title: Text(
                                           AppLocalizations.of(context)!.title,
                                         ),
