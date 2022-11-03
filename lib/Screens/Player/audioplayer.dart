@@ -1162,6 +1162,32 @@ class NowPlayingStream extends StatelessWidget {
     this.headHeight = 50,
   });
 
+  void _updateScrollController(
+    ScrollController? _controller,
+    int? itemIndex,
+    int queuePosition,
+    queue,
+  ) {
+    if (queuePosition > 3) {
+      _controller?.animateTo(
+        itemIndex! * 72 + 12,
+        curve: Curves.linear,
+        duration: const Duration(
+          milliseconds: 350,
+        ),
+      );
+    } else if (queue.length - queuePosition < 5) {
+      _controller?.animateTo(
+        queue.length - 4 * 72 + 12,
+        curve: Curves.linear,
+        duration: const Duration(
+          milliseconds: 350,
+        ),
+      );
+    }
+    return;
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QueueState>(
@@ -1169,6 +1195,16 @@ class NowPlayingStream extends StatelessWidget {
       builder: (context, snapshot) {
         final queueState = snapshot.data ?? QueueState.empty;
         final queue = queueState.queue;
+        final int queueStateIndex = queueState.queueIndex ?? 0;
+        final num queuePosition = queue.length - queueStateIndex;
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) => _updateScrollController(
+          scrollController,
+          queueState.queueIndex,
+          queuePosition.toInt(),
+          queue,
+          ),
+        );
 
         return ReorderableListView.builder(
           header: SizedBox(
@@ -1365,6 +1401,12 @@ class NowPlayingStream extends StatelessWidget {
                   ),
                   onTap: () {
                     audioHandler.skipToQueueItem(index);
+                    _updateScrollController(
+                      scrollController,
+                      queueState.queueIndex,
+                      queuePosition.toInt(),
+                      queue,
+                    );
                   },
                 ),
               ),
