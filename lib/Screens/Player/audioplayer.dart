@@ -1163,22 +1163,22 @@ class NowPlayingStream extends StatelessWidget {
   });
 
   void _updateScrollController(
-    ScrollController? _controller,
-    int? itemIndex,
+    ScrollController? controller,
+    int itemIndex,
     int queuePosition,
-    queue,
+    int queueLength,
   ) {
     if (queuePosition > 3) {
-      _controller?.animateTo(
-        itemIndex! * 72 + 12,
+      controller?.animateTo(
+        itemIndex * 72 + 12,
         curve: Curves.linear,
         duration: const Duration(
           milliseconds: 350,
         ),
       );
-    } else if (queue.length - queuePosition < 5) {
-      _controller?.animateTo(
-        queue.length - 4 * 72 + 12,
+    } else if (queuePosition < 4 && queueLength > 4) {
+      controller?.animateTo(
+        (queueLength - 4) * 72 + 12,
         curve: Curves.linear,
         duration: const Duration(
           milliseconds: 350,
@@ -1199,10 +1199,10 @@ class NowPlayingStream extends StatelessWidget {
         final num queuePosition = queue.length - queueStateIndex;
         WidgetsBinding.instance.addPostFrameCallback(
           (_) => _updateScrollController(
-          scrollController,
-          queueState.queueIndex,
-          queuePosition.toInt(),
-          queue,
+            scrollController,
+            queueState.queueIndex ?? 0,
+            queuePosition.toInt(),
+            queue.length,
           ),
         );
 
@@ -1403,9 +1403,9 @@ class NowPlayingStream extends StatelessWidget {
                     audioHandler.skipToQueueItem(index);
                     _updateScrollController(
                       scrollController,
-                      queueState.queueIndex,
+                      queueState.queueIndex ?? 0,
                       queuePosition.toInt(),
-                      queue,
+                      queue.length,
                     );
                   },
                 ),
