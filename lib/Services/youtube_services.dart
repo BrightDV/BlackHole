@@ -79,14 +79,25 @@ class YouTubeServices {
             'Highlights from Global Citizen Live') {
           return {
             'title': element['title']['runs'][0]['text'],
-            'playlists': element['title']['runs'][0]['text'].trim() == 'Charts'
+            'playlists': element['title']['runs'][0]['text'].trim() ==
+                        'Charts' ||
+                    element['title']['runs'][0]['text'].trim() == 'Classements'
                 ? formatChartItems(
                     element['content']['horizontalListRenderer']['items']
                         as List,
                   )
                 : element['title']['runs'][0]['text']
-                        .toString()
-                        .contains('Music Videos')
+                            .toString()
+                            .contains('Music Videos') ||
+                        element['title']['runs'][0]['text']
+                            .toString()
+                            .contains('Nouveaux clips') ||
+                        element['title']['runs'][0]['text']
+                            .toString()
+                            .contains('En Musique Avec Moi') ||
+                        element['title']['runs'][0]['text']
+                            .toString()
+                            .contains('Performances Uniques')
                     ? formatVideoItems(
                         element['content']['horizontalListRenderer']['items']
                             as List,
