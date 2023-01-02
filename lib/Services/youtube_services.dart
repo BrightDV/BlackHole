@@ -358,7 +358,7 @@ class YouTubeServices {
   }
 
   Future<List<Video>> fetchSearchResults(String query) async {
-    final List<Video> searchResults = await yt.search.getVideos(query);
+    final List<Video> searchResults = await yt.search.search(query);
 
     // Uri link = Uri.https(searchAuthority, searchPath, {"search_query": query});
     // final Response response = await get(link);
